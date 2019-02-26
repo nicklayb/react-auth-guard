@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "jsx-quotes": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "prefer-promise-reject-error": 0,
+    "react/prop-types": 0,
+    "react/require-default-props": 0,
+    "semi": ["error", "never"],
+    "import/prefer-default-export": 0,
+    "react/no-array-index-key": 0,
+    "react/destructuring-assignment": 0,
+    "import/no-extraneous-dependencies": 0
+  }
+}
