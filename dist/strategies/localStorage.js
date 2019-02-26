@@ -7,7 +7,7 @@ var persistLocalStorage = function persistLocalStorage(key) {
       localStorage.setItem(key, token);
     },
     clear: function clear() {
-      localStorage.removeItem();
+      localStorage.removeItem(key);
     }
   };
 };

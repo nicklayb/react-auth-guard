@@ -11,7 +11,8 @@
     "build-examples": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "build": "rimraf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__"
+    "build": "rimraf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
+    "publish": "npm run build && npm publish"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -33,5 +34,20 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nicklayb/react-auth-guard.git"
+  },
+  "keywords": [
+    "react",
+    "authentication",
+    "context",
+    "guard",
+    "auth"
+  ],
+  "bugs": {
+    "url": "https://github.com/nicklayb/react-auth-guard/issues"
+  },
+  "homepage": "https://github.com/nicklayb/react-auth-guard#readme"
 }
