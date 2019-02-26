@@ -6,7 +6,7 @@ const persistLocalStorage = key => ({
     localStorage.setItem(key, token)
   },
   clear() {
-    localStorage.removeItem()
+    localStorage.removeItem(key)
   },
 })
 
