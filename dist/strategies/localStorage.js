@@ -1,7 +1,7 @@
 var persistLocalStorage = function persistLocalStorage(key) {
   return {
     get: function get() {
-      localStorage.getItem(key);
+      return localStorage.getItem(key);
     },
     persist: function persist(token) {
       localStorage.setItem(key, token);
