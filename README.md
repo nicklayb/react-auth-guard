@@ -53,6 +53,7 @@ const App = () => (
   <Provider
     fetchUser={() => new Promise(resolve => resolve())}
     getters={authGetters}
+    onLogout={() => alert('You\'ve been logged out')}
   >
     {({ authenticating, authenticated }) => (
       <Loading isLoading={authenticating}>
@@ -111,6 +112,7 @@ export default withAuth(NotAuthenticated)
 - `decodeToken`: Function that decodes the token. Uses `jwt-decode` as default
 - `getDecodedUserId`: Function that decodes the user id from the decoded token. By default is returns the `sub` part of the token.
 - `persistStrategy`: A persistancy strategy object. May be useful to override if you want to persist the token in `AsyncStorage` for a React-Native usecase. Defaults to a localStorage handle, refer to [Persistance strategy](#persistance-strategy) for more info.
+- `onLogout`: Callback that'll be executed when logout is fired
 - `children`: Function that expose the render props
 
 ## Render props

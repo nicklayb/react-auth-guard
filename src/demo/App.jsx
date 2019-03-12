@@ -15,6 +15,7 @@ const App = () => (
   <Provider
     fetchUser={() => new Promise(resolve => resolve())}
     getters={authGetters}
+    onLogout={() => alert('Logout')}
   >
     {({ authenticating, authenticated }) => (
       <Loading isLoading={authenticating}>

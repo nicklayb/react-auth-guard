@@ -22,6 +22,7 @@ class AuthenticationProvider extends React.Component {
     decodeToken: token => jwtDecode(token),
     getDecodedUserId: ({ sub }) => sub,
     persistStrategy: persistLocalStorage(TOKEN_KEY),
+    onLogout: () => {},
   }
 
   constructor(props) {
@@ -93,7 +94,7 @@ class AuthenticationProvider extends React.Component {
   }
 
   logout = () => {
-    this.handleFailure()
+    this.handleFailure(this.props.onLogout)
   }
 
   handleSuccess(decoded) {
@@ -103,13 +104,13 @@ class AuthenticationProvider extends React.Component {
     })
   }
 
-  handleFailure() {
+  handleFailure(callback = () => {}) {
     this.props.persistStrategy.clear()
     this.setState({
       userId: null,
       authenticating: false,
       token: null,
-    })
+    }, callback)
   }
 
   renderBody() {

@@ -149,7 +149,7 @@ function (_React$Component) {
     }));
 
     _this.logout = function () {
-      _this.handleFailure();
+      _this.handleFailure(_this.props.onLogout);
     };
 
     _this.state = {
@@ -191,12 +191,13 @@ function (_React$Component) {
   }, {
     key: "handleFailure",
     value: function handleFailure() {
+      var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
       this.props.persistStrategy.clear();
       this.setState({
         userId: null,
         authenticating: false,
         token: null
-      });
+      }, callback);
     }
   }, {
     key: "renderBody",
@@ -234,7 +235,8 @@ AuthenticationProvider.defaultProps = {
     var sub = _ref6.sub;
     return sub;
   },
-  persistStrategy: persistLocalStorage(TOKEN_KEY)
+  persistStrategy: persistLocalStorage(TOKEN_KEY),
+  onLogout: function onLogout() {}
 };
 export default AuthenticationProvider;
 export { Consumer };
