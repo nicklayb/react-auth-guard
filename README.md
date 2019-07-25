@@ -54,6 +54,8 @@ const App = () => (
     fetchUser={() => new Promise(resolve => resolve())}
     getters={authGetters}
     onLogout={() => alert('You\'ve been logged out')}
+    onLogin={() => alert('Welcome to the magical world of the internet')}
+    onLoginFail={() => alert('You shall not pass!')}
   >
     {({ authenticating, authenticated }) => (
       <Loading isLoading={authenticating}>
@@ -113,6 +115,8 @@ export default withAuth(NotAuthenticated)
 - `getDecodedUserId`: Function that decodes the user id from the decoded token. By default is returns the `sub` part of the token.
 - `persistStrategy`: A persistancy strategy object. May be useful to override if you want to persist the token in `AsyncStorage` for a React-Native usecase. Defaults to a localStorage handle, refer to [Persistance strategy](#persistance-strategy) for more info.
 - `onLogout`: Callback that'll be executed when logout is fired
+- `onLogin`: Callback that'll be executed when login is successful (the `fetchUser` did resolve)
+- `onLoginFail`: Callback that'll be executed when login is failure (the `fetchUser` did reject)
 - `children`: Function that expose the render props
 
 ## Render props
@@ -129,7 +133,7 @@ export default withAuth(NotAuthenticated)
 ### Why?
 What makes the provider easy to use, is because he's decoupled with app state. So if you're using GraphQL or json:api compliant api. The provider don't needs to know.
 
-Getters allows you to inject function that get available in your auth provider without composing HOC or things. For instance, I used a json:api compliant app where my local user is stored in redux other entities. Without getters, I was forced to always use Redux`s connect composed with `withAuth` HOC everytime I wanted to use my current user. I added a `getUser` getter to the provider which calls calls my Redux store.
+Getters allows you to inject function that get available in your auth provider without composing HOC or things. For instance, I used a json:api compliant app where my local user is stored in redux other entities. Without getters, I was forced to always use Redux's connect composed with `withAuth` HOC everytime I wanted to use my current user. I added a `getUser` getter to the provider which calls calls my Redux store.
 
 ### How?
 
