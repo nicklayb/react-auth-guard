@@ -122,13 +122,13 @@ function (_React$Component) {
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
-              return _this.props.fetchUser();
+              return _this.props.fetchUser(_this.getProviderState());
 
             case 3:
               payload = _context2.sent;
               decoded = _this.props.decodeToken(_this.state.token);
 
-              _this.handleSuccess(decoded);
+              _this.handleSuccess(decoded, _this.props.onLogin);
 
               return _context2.abrupt("return", payload);
 
@@ -136,7 +136,7 @@ function (_React$Component) {
               _context2.prev = 9;
               _context2.t0 = _context2["catch"](0);
 
-              _this.handleFailure();
+              _this.handleFailure(_this.props.onLoginFail);
 
               return _context2.abrupt("return", _context2.t0);
 
@@ -183,10 +183,11 @@ function (_React$Component) {
   }, {
     key: "handleSuccess",
     value: function handleSuccess(decoded) {
+      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       this.setState({
         userId: this.props.getDecodedUserId(decoded),
         authenticating: false
-      });
+      }, callback);
     }
   }, {
     key: "handleFailure",
@@ -236,7 +237,9 @@ AuthenticationProvider.defaultProps = {
     return sub;
   },
   persistStrategy: persistLocalStorage(TOKEN_KEY),
-  onLogout: function onLogout() {}
+  onLogout: function onLogout() {},
+  onLoginFail: function onLoginFail() {},
+  onLogin: function onLogin() {}
 };
 export default AuthenticationProvider;
 export { Consumer };

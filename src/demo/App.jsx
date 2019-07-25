@@ -1,4 +1,5 @@
 import React from 'react'
+import jwtDecode from 'jwt-decode'
 import Provider from '../lib'
 import Loading from './Loading'
 import NotAuthenticated from './NotAuthenticated'
@@ -11,11 +12,21 @@ const authGetters = {
   }),
 }
 
+const fetchUser = ({ token }) => new Promise((resolve, reject) => {
+  const { sub } = jwtDecode(token)
+  if (sub.toString() === '1') {
+    return resolve()
+  }
+  return reject()
+})
+
 const App = () => (
   <Provider
-    fetchUser={() => new Promise(resolve => resolve())}
+    fetchUser={fetchUser}
     getters={authGetters}
     onLogout={() => alert('Logout')}
+    onLoginFail={() => alert('Could not login')}
+    onLogin={() => alert('Login success!')}
   >
     {({ authenticating, authenticated }) => (
       <Loading isLoading={authenticating}>

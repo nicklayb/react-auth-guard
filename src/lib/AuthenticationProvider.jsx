@@ -23,6 +23,8 @@ class AuthenticationProvider extends React.Component {
     getDecodedUserId: ({ sub }) => sub,
     persistStrategy: persistLocalStorage(TOKEN_KEY),
     onLogout: () => {},
+    onLoginFail: () => {},
+    onLogin: () => {},
   }
 
   constructor(props) {
@@ -83,12 +85,12 @@ class AuthenticationProvider extends React.Component {
 
   fetchUser = async () => {
     try {
-      const payload = await this.props.fetchUser()
+      const payload = await this.props.fetchUser(this.getProviderState())
       const decoded = this.props.decodeToken(this.state.token)
-      this.handleSuccess(decoded)
+      this.handleSuccess(decoded, this.props.onLogin)
       return payload
     } catch (exception) {
-      this.handleFailure()
+      this.handleFailure(this.props.onLoginFail)
       return exception
     }
   }
@@ -97,11 +99,11 @@ class AuthenticationProvider extends React.Component {
     this.handleFailure(this.props.onLogout)
   }
 
-  handleSuccess(decoded) {
+  handleSuccess(decoded, callback = () => {}) {
     this.setState({
       userId: this.props.getDecodedUserId(decoded),
       authenticating: false,
-    })
+    }, callback)
   }
 
   handleFailure(callback = () => {}) {
