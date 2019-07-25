@@ -103,7 +103,7 @@ class AuthenticationProvider extends React.Component {
     this.setState({
       userId: this.props.getDecodedUserId(decoded),
       authenticating: false,
-    }, callback)
+    }, () => callback(this.getProviderState()))
   }
 
   handleFailure(callback = () => {}) {
@@ -112,7 +112,7 @@ class AuthenticationProvider extends React.Component {
       userId: null,
       authenticating: false,
       token: null,
-    }, callback)
+    }, () => callback(this.getProviderState()))
   }
 
   renderBody() {

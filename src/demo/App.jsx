@@ -26,7 +26,7 @@ const App = () => (
     getters={authGetters}
     onLogout={() => alert('Logout')}
     onLoginFail={() => alert('Could not login')}
-    onLogin={() => alert('Login success!')}
+    onLogin={({ userId }) => alert(`Login success for userId == ${userId}!`)}
   >
     {({ authenticating, authenticated }) => (
       <Loading isLoading={authenticating}>

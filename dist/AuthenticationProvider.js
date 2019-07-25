@@ -183,22 +183,30 @@ function (_React$Component) {
   }, {
     key: "handleSuccess",
     value: function handleSuccess(decoded) {
+      var _this2 = this;
+
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       this.setState({
         userId: this.props.getDecodedUserId(decoded),
         authenticating: false
-      }, callback);
+      }, function () {
+        return callback(_this2.getProviderState());
+      });
     }
   }, {
     key: "handleFailure",
     value: function handleFailure() {
+      var _this3 = this;
+
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
       this.props.persistStrategy.clear();
       this.setState({
         userId: null,
         authenticating: false,
         token: null
-      }, callback);
+      }, function () {
+        return callback(_this3.getProviderState());
+      });
     }
   }, {
     key: "renderBody",
