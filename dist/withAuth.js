@@ -1,7 +1,6 @@
 import React from 'react';
-import { Consumer } from './AuthenticationProvider';
-
-var withAuth = function withAuth(Component) {
+import { Consumer, Context } from './AuthenticationProvider';
+export var withAuth = function withAuth(Component) {
   return function (props) {
     return React.createElement(Consumer, null, function (auth) {
       return React.createElement(Component, Object.assign({}, props, {
@@ -10,5 +9,6 @@ var withAuth = function withAuth(Component) {
     });
   };
 };
-
-export default withAuth;
+export var useAuth = function useAuth() {
+  return React.useContext(Context);
+};

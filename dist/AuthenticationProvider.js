@@ -17,11 +17,7 @@ var CONTEXT = {
   authenticating: false,
   user: null
 };
-
-var _React$createContext = React.createContext(CONTEXT),
-    Provider = _React$createContext.Provider,
-    Consumer = _React$createContext.Consumer;
-
+var Context = React.createContext(CONTEXT);
 var TOKEN_KEY = 'token';
 var provider = null;
 export var getProvider = function getProvider() {
@@ -216,7 +212,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(Provider, {
+      return React.createElement(Context.Provider, {
         value: this.getProviderState()
       }, this.renderBody());
     }
@@ -250,4 +246,5 @@ AuthenticationProvider.defaultProps = {
   onLogin: function onLogin() {}
 };
 export default AuthenticationProvider;
-export { Consumer };
+var Consumer = Context.Consumer;
+export { Consumer, Context };
