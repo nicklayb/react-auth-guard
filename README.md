@@ -93,6 +93,30 @@ const NotAuthenticated = ({ auth }) => {
 export default withAuth(NotAuthenticated)
 ```
 
+#### Using the hook
+
+The same strategy could be achieve using the `useAuth` hook.
+
+```js
+import { useAuth } from 'react-auth-provider'
+
+const NotAuthenticated = () => {
+  const auth = useAuth()
+  const login = () => loginUser().then(({ token }) => {
+    auth.updateToken(token)
+  })
+
+  return (
+    <div>
+      <h1>NotAuthenticated</h1>
+      <button type="button" onClick={login}>Login</button>
+    </div>
+  )
+}
+
+export default NotAuthenticated
+```
+
 ### Logout the provider
 
 The Consumer (and the HOC) also exposes a `logout` function that clears the token from the persistance strategy and unauthenticate the provider.
