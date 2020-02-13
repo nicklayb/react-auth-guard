@@ -1,10 +1,11 @@
 import React from 'react'
-import { Consumer } from './AuthenticationProvider'
+import { Consumer, Context } from './AuthenticationProvider'
 
-const withAuth = Component => props => (
+export const withAuth = Component => props => (
   <Consumer>
     {auth => <Component {...props} auth={auth} />}
   </Consumer>
 )
 
-export default withAuth
+export const useAuth = () => React.useContext(Context)
+

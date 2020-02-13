@@ -8,7 +8,7 @@ const CONTEXT = {
   user: null,
 }
 
-const { Provider, Consumer } = React.createContext(CONTEXT)
+const Context = React.createContext(CONTEXT)
 
 const TOKEN_KEY = 'token'
 
@@ -121,15 +121,18 @@ class AuthenticationProvider extends React.Component {
 
   render() {
     return (
-      <Provider value={this.getProviderState()}>
+      <Context.Provider value={this.getProviderState()}>
         {this.renderBody()}
-      </Provider>
+      </Context.Provider>
     )
   }
 }
 
 export default AuthenticationProvider
 
+const { Consumer } = Context
+
 export {
   Consumer,
+  Context,
 }
