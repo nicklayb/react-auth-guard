@@ -1,7 +1,9 @@
 var persistLocalStorage = function persistLocalStorage(key) {
   return {
     get: function get() {
-      return localStorage.getItem(key);
+      return new Promise(function (resolve) {
+        return resolve(localStorage.getItem(key));
+      });
     },
     persist: function persist(token) {
       localStorage.setItem(key, token);

@@ -2,6 +2,34 @@
 
 A React context component to provide authentication through the app. The provider is decoupled from user persistance layout. It does not use/need Redux.
 
+### Breaking changes in 0.2.0
+
+#### Persistance strategy
+The persistance strategy used to return a raw value from the persistance. While most storage drivers will use async workflows (like `AsyncStorage`), a promise is more suitable for this use case.
+
+That being said, if you implemented your own persistance strategy, the only change you need to do to still be compliant is to return a promise that resolves.
+
+Example:
+```js
+// Before
+let token = null
+const strategy = {
+  get: () => {
+    return token
+  }
+  // ...
+}
+
+// After
+let token = null
+const strategy = {
+  get: () => {
+    return new Promise(resolve => resolve(token))
+  }
+  // ...
+}
+```
+
 ## Installation
 
 Install the package using the following command
@@ -185,7 +213,7 @@ As said earlier, you may not want to persist the token in the localStorage. You 
 
 A persistance strategy is only an object that implements three functions:
 
-- `get: () => void`: Gets the token from the persistance
+- `get: () => Promise<void>`: Gets the token from the persistance using a promise
 - `persist: (token: string) => void`: Persists the given token
 - `clear: () => void`: Removes the token
 

@@ -1,6 +1,6 @@
 const persistLocalStorage = key => ({
   get() {
-    return localStorage.getItem(key)
+    return new Promise(resolve => resolve(localStorage.getItem(key)))
   },
   persist(token) {
     localStorage.setItem(key, token)
