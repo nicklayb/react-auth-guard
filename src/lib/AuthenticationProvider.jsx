@@ -30,7 +30,7 @@ class AuthenticationProvider extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      token: props.persistStrategy.get() || null,
+      token: undefined,
       authenticating: true,
       userId: null,
     }
@@ -38,17 +38,25 @@ class AuthenticationProvider extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.token) {
-      this.fetchUser()
-    }
+    this.props.persistStrategy.get().then((token) => {
+      this.setState({ token }, () => {
+        if (token) {
+          this.fetchUser()
+        }
+      })
+    })
   }
 
   get authenticating() {
-    return !!this.state.token && this.state.authenticating
+    return (!!this.state.token || !this.tokenFetched) && this.state.authenticating
   }
 
   get authenticated() {
     return !!this.state.token && !!this.state.userId && !this.authenticating
+  }
+
+  get tokenFetched() {
+    return this.state.token !== undefined
   }
 
   getProviderState() {

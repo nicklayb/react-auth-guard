@@ -149,7 +149,7 @@ function (_React$Component) {
     };
 
     _this.state = {
-      token: props.persistStrategy.get() || null,
+      token: undefined,
       authenticating: true,
       userId: null
     };
@@ -160,9 +160,17 @@ function (_React$Component) {
   _createClass(AuthenticationProvider, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (this.state.token) {
-        this.fetchUser();
-      }
+      var _this2 = this;
+
+      this.props.persistStrategy.get().then(function (token) {
+        _this2.setState({
+          token: token
+        }, function () {
+          if (token) {
+            _this2.fetchUser();
+          }
+        });
+      });
     }
   }, {
     key: "getProviderState",
@@ -179,20 +187,20 @@ function (_React$Component) {
   }, {
     key: "handleSuccess",
     value: function handleSuccess(decoded) {
-      var _this2 = this;
+      var _this3 = this;
 
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       this.setState({
         userId: this.props.getDecodedUserId(decoded),
         authenticating: false
       }, function () {
-        return callback(_this2.getProviderState());
+        return callback(_this3.getProviderState());
       });
     }
   }, {
     key: "handleFailure",
     value: function handleFailure() {
-      var _this3 = this;
+      var _this4 = this;
 
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
       this.props.persistStrategy.clear();
@@ -201,7 +209,7 @@ function (_React$Component) {
         authenticating: false,
         token: null
       }, function () {
-        return callback(_this3.getProviderState());
+        return callback(_this4.getProviderState());
       });
     }
   }, {
@@ -219,12 +227,17 @@ function (_React$Component) {
   }, {
     key: "authenticating",
     get: function get() {
-      return !!this.state.token && this.state.authenticating;
+      return (!!this.state.token || !this.tokenFetched) && this.state.authenticating;
     }
   }, {
     key: "authenticated",
     get: function get() {
       return !!this.state.token && !!this.state.userId && !this.authenticating;
+    }
+  }, {
+    key: "tokenFetched",
+    get: function get() {
+      return this.state.token !== undefined;
     }
   }]);
 
